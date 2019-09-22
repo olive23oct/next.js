@@ -30,3 +30,19 @@ yarn add nodemon
   }
 }
 ```
+
+## 환경변수
+- window 환경변수 설정 방법 
+    - cross-env
+    - dotenv
+        ```bash
+        #설치
+        yarn add dotenv
+        ```
+        - .env 파일 생성 (외부에서 환경변수 설정) -> git에 배포하지 않음
+        ```js
+        //server.js에 추가
+         require('dotenv').config()
+         ```
+
+        
