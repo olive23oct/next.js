@@ -11,8 +11,6 @@ const koaBody = require('koa-body');
 
 const api = new Router({ prefix: '/api' });
 
-const firebaseApp = require('./firebase/firebaseApp');
-
 api.get('/', async context => {
   context.body = 'api';
 });
