@@ -6,18 +6,21 @@ export default () => {
     const submit = () => {
         axios.post('/api/feeds', {
             content,
-        })
-        ,then( () => {
-            alert( '완료되었습니다 ');
-        })
-        .catch 
+        } )
+        .then( () => {
+            setContent( '' );
+        } )
+        .catch( error => {
+            console.log( error );
+            alert( error.message );
+        } );
     }
     return (
         <>
-            <input type='text' 
-                   value= { content }
-                   onChange={ text => setContent( event.target.value ) }/>
-            <button onClick={submit}>전송</button>
+            <input type="text"
+                   value={ content }
+                   onChange={ event => setContent( event.target.value ) }/>
+            <button onClick={ submit }>전송</button>
         </>
     )
 }

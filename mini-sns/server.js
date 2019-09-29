@@ -11,12 +11,39 @@ const koaBody = require('koa-body');
 
 const api = new Router({ prefix: '/api' });
 
+const firebaseApp = require( './firebase/firebaseApp' );
+const db = firebaseApp.firestore();
+const moment = require( 'moment' );
+
+// .env load
+
+require('dotenv').config();
+
 api.get('/', async context => {
   context.body = 'api';
 });
 
 api.get('/ping', async context => {
   context.body = 'pong';
+});
+
+api.get( '/feeds', async context => {
+    const result = await db.collection('feeds').get();
+    const list = [];
+    result.forEach( doc => {
+        list.push( { id: doc.id, ...doc.data() } );
+    } );
+    context.body = list;
+});
+api.post( '/feeds', async context => {
+    const content = context.request.body.content;
+    const now = moment().format( 'YYYY-MM-DD HH:mm:ss' );
+    const doc = await db.collection('feeds').add({
+        content,
+        created_at: now,
+        updated_at: now,
+    });
+    context.body = doc.id;
 });
 
 app
